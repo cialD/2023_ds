@@ -1,52 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>タイマー</title>
+    <title>占いプログラム</title>
 </head>
 <body>
-    <h1>タイマー</h1>
-    <p id="timer">00:00:00</p>
-    <button onclick="startTimer()">スタート</button>
-    <button onclick="stopTimer()">ストップ</button>
-    <button onclick="resetTimer()">リセット</button>
+    <h1>今日の占い</h1>
+    <p id="fortune-result"></p>
+    <button onclick="getFortune()">占う</button>
 
     <script>
-        let timerInterval;
-        let seconds = 0;
-        let minutes = 0;
-        let hours = 0;
-
-        function startTimer() {
-            timerInterval = setInterval(updateTimer, 1000);
-        }
-
-        function updateTimer() {
-            seconds++;
-            if (seconds === 60) {
-                seconds = 0;
-                minutes++;
-                if (minutes === 60) {
-                    minutes = 0;
-                    hours++;
-                }
-            }
-            document.getElementById("timer").innerText = `${hours}:${pad2(minutes)}:${pad2(seconds)}`;
-        }
-
-        function stopTimer() {
-            clearInterval(timerInterval);
-        }
-
-        function resetTimer() {
-            clearInterval(timerInterval);
-            seconds = 0;
-            minutes = 0;
-            hours = 0;
-            document.getElementById("timer").innerText = "00:00:00";
-        }
-
-        function pad2(number) {
-            return (number < 10 ? '0' : '') + number;
+        function getFortune() {
+            const fortunes = [
+                "大吉",
+                "中吉",
+                "小吉",
+                "吉",
+                "末吉",
+                "凶",
+                "大凶"
+            ];
+            const randomIndex = Math.floor(Math.random() * fortunes.length);
+            const randomFortune = fortunes[randomIndex];
+            document.getElementById("fortune-result").innerText = `今日の運勢: ${randomFortune}`;
         }
     </script>
 </body>
