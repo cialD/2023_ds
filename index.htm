@@ -1,37 +1,53 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Rainbow Text</title>
-    <style>
-      #text {
-        font-size: 24px;
-        transition: color 0.5s;
-      }
-    </style>
-  </head>
-  <body>
-    <button onclick="showRainbowText()">�{�^��������</button>
-    <p id="text">Hello world</p>
+<head>
+    <title>タイマー</title>
+</head>
+<body>
+    <h1>タイマー</h1>
+    <p id="timer">00:00:00</p>
+    <button onclick="startTimer()">スタート</button>
+    <button onclick="stopTimer()">ストップ</button>
+    <button onclick="resetTimer()">リセット</button>
 
     <script>
-      function showRainbowText() {
-        var textElement = document.getElementById("text");
-        var colors = [
-          "red",
-          "orange",
-          "yellow",
-          "green",
-          "blue",
-          "indigo",
-          "violet"
-        ];
-        var currentColor = 0;
+        let timerInterval;
+        let seconds = 0;
+        let minutes = 0;
+        let hours = 0;
 
-        setInterval(function() {
-          textElement.style.color = colors[currentColor];
-          currentColor = (currentColor + 1) % colors.length;
-        }, 500);
-      }
+        function startTimer() {
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            seconds++;
+            if (seconds === 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes === 60) {
+                    minutes = 0;
+                    hours++;
+                }
+            }
+            document.getElementById("timer").innerText = `${hours}:${pad2(minutes)}:${pad2(seconds)}`;
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            seconds = 0;
+            minutes = 0;
+            hours = 0;
+            document.getElementById("timer").innerText = "00:00:00";
+        }
+
+        function pad2(number) {
+            return (number < 10 ? '0' : '') + number;
+        }
     </script>
-  </body>
+</body>
 </html>
